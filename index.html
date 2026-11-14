@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rawsprite</title>
+    <script type="module" src="/src/main.ts" defer></script>
+  </head>
+
+  <body>
+    <main class="container">
+      
+      <div class="canvas-container">
+        <canvas id="editor-canvas" width="1024" height="1024" tabindex="0"></canvas>
+        <canvas id="overlay-canvas" width="1024" height="1024" tabindex="0"></canvas>
+      </div>
+
+      <div class="toolbar">
+        <button id="debug-button">Fill</button>
+        <button id="start-renderer">Start</button>
+        <button id="stop-renderer">Stop</button>
+        <button id="dispose-renderer">Dispose</button>
+        <button id="clear">Clear</button>
+        <button id="fit">Fit</button>
+      </div>
+
+    </main>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+#debug-output {
+    color: black;
+    background-color: #e0e0e0;
+    padding: 12px;
+    font-family: monospace;
+    white-space: pre;
+}
+
+.canvas-container {
+    position: relative;
+    width: 1024px;
+    height: 1024px;
+    border: 2.5px solid #9b9b9b;
+}
+
+.canvas-container canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1024px;
+    height: 1024px;
+}
+
+
+#editor-canvas {
+    z-index: 1;
+}
+
+#overlay-canvas {
+    z-index: 2;
+    pointer-events: none;
+}
+
+#editor-canvas.grab {
+    cursor: grab;
+}
+
+#editor-canvas.grabbing {
+    cursor: grabbing;
+}
