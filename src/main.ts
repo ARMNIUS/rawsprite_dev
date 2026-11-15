@@ -8,6 +8,8 @@ import { ToolManager } from "./tools/ToolManager";
 import { PointerHandler } from "./input/PointerHandler";
 import { InteractionMode } from "./types";
 import { PanHandler } from "./input/PanHandler";
+import { Eraser } from "./tools/Eraser";
+import { Bucket } from "./tools/Bucket";
 
 // ============================================================================
 // DOM
@@ -31,13 +33,19 @@ if (!activeLayer) {
     throw new Error("No active layer");
 }
 
+const bucket = new Bucket();
+console.log("Bucket reference:", bucket);
+
 const brush = new Brush();
+const eraser = new Eraser();
 const toolManager = new ToolManager(brush);
 
 const toolContext: ToolContext = {
     activeLayer,
     color: [255, 0, 0, 255],
 };
+
+
 
 // ============================================================================
 // Rendering
@@ -116,6 +124,19 @@ document.querySelector("#debug-button")?.addEventListener("click", () => {
 document.querySelector("#clear")?.addEventListener("click", () => {
     activeLayer.canvas.clear();
     overlay.clear();
+});
+
+document.querySelector("#brush")?.addEventListener("click", () => {
+    toolManager.setTool(brush);
+});
+
+document.querySelector("#eraser")?.addEventListener("click", () => {
+    toolManager.setTool(eraser);
+});
+
+document.querySelector("#bucket")?.addEventListener("click", () => {
+    console.log("button clicked");
+    toolManager.setTool(bucket);
 });
 
 // ============================================================================

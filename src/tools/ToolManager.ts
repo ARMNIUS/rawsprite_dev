@@ -8,10 +8,12 @@ export class ToolManager {
     }
 
     setTool(tool: Tool): void {
+        console.log("Tool changed:", tool);
         this.activeTool = tool;
     }
 
     onPointerDown(context: ToolContext, p: Point): void {
+        console.log("Active tool:", this.activeTool.constructor.name);
         this.activeTool.onPointerDown(context, p);
     }
 

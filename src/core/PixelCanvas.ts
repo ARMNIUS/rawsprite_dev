@@ -10,6 +10,9 @@ export class PixelCanvas {
     height: number;
     pixels: Uint8ClampedArray;
 
+    private updateDepth = 0;
+    private hasPendingChanges = false;
+
     private listeners: (() => void)[] = [];
 
     subscribe(callback: () => void): () => void {
@@ -33,10 +36,37 @@ export class PixelCanvas {
     }
 
     private notifyChange(): void {
+        
+        if (this.updateDepth > 0) {
+            this.hasPendingChanges = true;
+            return;
+        }
+        
         this.listeners.forEach(callback => {
             callback();
         });
     }
+
+    beginUpdate(): void {
+        if (!this.updateDepth) {
+            this.hasPendingChanges = false;
+        }
+        this.updateDepth++;
+    }
+    
+   endUpdate(): void {
+        if (this.updateDepth <= 0) return;
+
+        this.updateDepth--;
+
+        if (this.hasPendingChanges && !this.updateDepth) {
+            this.notifyChange();
+        }
+
+        if (!this.updateDepth) {
+            this.hasPendingChanges = false;
+        }
+    } 
 
     /* возвращает начальный индекс пикселя по координатам */
     getPixelIndex(x:number, y:number): number {
@@ -55,8 +85,11 @@ export class PixelCanvas {
         if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
             
             /* получает начальный пиеселя индекс по координатам в index */
-            let index = this.getPixelIndex(x, y);
-
+            const index = this.getPixelIndex(x, y);
+            if (this.pixels[index] === r &&
+                this.pixels[index + 1] === g &&
+                this.pixels[index + 2] === b && 
+                this.pixels[index + 3] === a) return;
             this.pixels[index] = r; /* R - красный канал */
             this.pixels[index + 1] = g; /* G - зеленый канал */
             this.pixels[index + 2] = b; /* B - синий канал */

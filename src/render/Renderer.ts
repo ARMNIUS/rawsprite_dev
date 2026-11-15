@@ -32,6 +32,7 @@ export class Renderer {
         this.animationFrameId = null;
 
         this.unsubscribePixelCanvas = this.pixelCanvas.subscribe(() => {
+            console.count("Render update")
             this.isDirty = true;
         });
 
