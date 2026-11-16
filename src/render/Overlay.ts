@@ -118,7 +118,7 @@ export class Overlay {
             context.strokeRect(xScreen, yScreen, widthScreen, heightScreen);
         }
         this.drawCanvasBorder(context);
-        this.drawGrid(context);
+        //this.drawGrid(context);
         
 
         this.isDirty = false;

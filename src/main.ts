@@ -42,7 +42,7 @@ const toolManager = new ToolManager(brush);
 
 const toolContext: ToolContext = {
     activeLayer,
-    color: [255, 0, 0, 255],
+    color: [189, 67, 235, 255],
 };
 
 
