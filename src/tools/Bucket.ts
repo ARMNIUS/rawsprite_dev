@@ -1,6 +1,5 @@
 import { Tool, ToolContext } from "./Tool";
 import { Point } from "../types";
-import { Layer } from "../core/Layer";
 
 /**
  * Инструмент "Заливка" (Bucket).
@@ -29,11 +28,7 @@ export class Bucket implements Tool {
             const y = Math.floor(p.y);
 
             // Получаем цвет пикселя, по которому кликнули (целевой цвет для замены)
-            const targetColor = canvas.getPixel(x, y);
-
-            console.log("Bucket coordinates:", x, y);
-            console.log("Target color:", targetColor);
-            console.log("Fill color:", context.color);
+            const targetColor = canvas.getPixel(x, y);        
 
             // Если пиксель вне границ холста (getPixel вернул null), прерываем выполнение
             if (targetColor === null) return;

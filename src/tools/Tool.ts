@@ -4,6 +4,7 @@ import { Point } from "../types";
 export interface ToolContext {
     activeLayer: Layer;
     color: [number, number, number, number];
+    setColor(color: [number, number, number, number]): void;
 }
 
 export interface Tool {

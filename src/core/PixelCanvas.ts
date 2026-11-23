@@ -13,6 +13,8 @@ export class PixelCanvas {
     private updateDepth = 0;
     private hasPendingChanges = false;
 
+    private historyAction: Map<number, [number, number, number, number]> | null = null;
+
     private listeners: (() => void)[] = [];
 
     subscribe(callback: () => void): () => void {
@@ -66,7 +68,23 @@ export class PixelCanvas {
         if (!this.updateDepth) {
             this.hasPendingChanges = false;
         }
-    } 
+    }
+
+    beginHistoryAction(): void {
+        this.historyAction = new Map();
+    }
+
+    endHistoryAction(): Map<number, [number, number, number, number]> | null {
+        const changes = this.historyAction;
+        this.historyAction = null;
+        
+        const colors = new Map();
+        for (const entry of this.historyAction) {
+            const [index, oldColor] = entry;
+        }
+
+        return changes;
+    }
 
     /* возвращает начальный индекс пикселя по координатам */
     getPixelIndex(x:number, y:number): number {
@@ -90,6 +108,16 @@ export class PixelCanvas {
                 this.pixels[index + 1] === g &&
                 this.pixels[index + 2] === b && 
                 this.pixels[index + 3] === a) return;
+            
+            if (this.historyAction !== null && !this.historyAction.has(index)) {
+                this.historyAction.set(index, [
+                    this.pixels[index],
+                    this.pixels[index + 1],
+                    this.pixels[index + 2],
+                    this.pixels[index + 3]
+                ]);
+            }
+
             this.pixels[index] = r; /* R - красный канал */
             this.pixels[index + 1] = g; /* G - зеленый канал */
             this.pixels[index + 2] = b; /* B - синий канал */

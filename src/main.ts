@@ -10,6 +10,7 @@ import { InteractionMode } from "./types";
 import { PanHandler } from "./input/PanHandler";
 import { Eraser } from "./tools/Eraser";
 import { Bucket } from "./tools/Bucket";
+import { Picker } from "./tools/Picker";
 
 // ============================================================================
 // DOM
@@ -38,11 +39,19 @@ console.log("Bucket reference:", bucket);
 
 const brush = new Brush();
 const eraser = new Eraser();
+
+const picker = new Picker();
 const toolManager = new ToolManager(brush);
+
+let currentColor: [number, number, number, number] = [189, 67, 235, 255];
 
 const toolContext: ToolContext = {
     activeLayer,
-    color: [189, 67, 235, 255],
+    color: currentColor,
+    setColor: (color) => {
+        currentColor = color;
+        toolContext.color = color
+    }
 };
 
 
@@ -137,6 +146,11 @@ document.querySelector("#eraser")?.addEventListener("click", () => {
 document.querySelector("#bucket")?.addEventListener("click", () => {
     console.log("button clicked");
     toolManager.setTool(bucket);
+});
+
+document.querySelector("#picker")?.addEventListener("click", () => {
+    console.log("button clicked");
+    toolManager.setTool(picker);
 });
 
 // ============================================================================
